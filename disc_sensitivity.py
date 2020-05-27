@@ -59,51 +59,51 @@ narray = np.zeros(len(exp))
 iarray = np.zeros(len(exp))
 
 
-# for isig, sigma in enumerate(sigarray):
-#     for imu_b, mu_b in enumerate(mu_barray):
-#         B2v = (T0vS/T2v)*(sigma/Qbb)**6
-#         n = 0.5*(2.8+10**(-0.48 - 0.32*np.log10(mu_b*sigma*M*T) - 0.046*(np.log10(mu_b*sigma*M*T))**2))
-#         aB = mu_b*M*T*2*n*sigma
-#         Barray[imu_b] = aB + B2v 
-#         narray[imu_b] = n
+for isig, sigma in enumerate(sigarray):
+    for imu_b, mu_b in enumerate(mu_barray):
+        B2v = (T0vS/T2v)*(sigma/Qbb)**6
+        n = 0.5*(2.8+10**(-0.48 - 0.32*np.log10(mu_b*sigma*M*T) - 0.046*(np.log10(mu_b*sigma*M*T))**2))
+        aB = mu_b*M*T*2*n*sigma
+        Barray[imu_b] = aB + B2v 
+        narray[imu_b] = n
         
-#         eff = sp.erf(n/np.sqrt(2))
+        eff = sp.erf(n/np.sqrt(2))
         
-#         x = np.arange(0, max(10,aB+B2v + 5*np.sqrt(aB+B2v)), 1)
-#         h0 = stats.poisson.pmf(x,aB + B2v)
+        x = np.arange(0, max(10,aB+B2v + 5*np.sqrt(aB+B2v)), 1)
+        h0 = stats.poisson.pmf(x,aB + B2v)
         
-#         i = 0
-#         integral = 0
+        i = 0
+        integral = 0
         
-#         while integral < 1 - alpha:
-#             integral += h0[i]
-#             i += 1
-#         iarray[imu_b] = i
+        while integral < 1 - alpha:
+            integral += h0[i]
+            i += 1
+        iarray[imu_b] = i
         
-#         s = 0
-#         integral2 = np.sum(stats.poisson.pmf(x,aB + B2v + s)[:i])
-#         while integral2 > beta:
-#             s += 0.1
-#             integral2 = np.sum(stats.poisson.pmf(x,aB + B2v + s)[:i])
+        s = 0
+        integral2 = np.sum(stats.poisson.pmf(x,aB + B2v + s)[:i])
+        while integral2 > beta:
+            s += 0.1
+            integral2 = np.sum(stats.poisson.pmf(x,aB + B2v + s)[:i])
 
         
-#         Thalfarray[isig,imu_b] = T0vS*eff_tot*eff/s
-#         #Thalfarray[imu_b] = T0vS*eff/s
-#         Sarray[imu_b] = s
+        Thalfarray[isig,imu_b] = T0vS*eff_tot*eff/s
+        #Thalfarray[imu_b] = T0vS*eff/s
+        Sarray[imu_b] = s
 
-#plt.figure(figsize = (15,5))
-#plt.plot(sigarray,Thalfarray[:,1])
-##plt.xscale('log')
-#
-#plt.figure(figsize = (15,5))
-#plt.plot(Barray,Sarray)
+plt.figure(figsize = (15,5))
+plt.plot(sigarray,Thalfarray[:,1])
 #plt.xscale('log')
-#plt.yscale('log')
-#
-#plt.figure(figsize = (15,5))
-#plt.plot(Barray,iarray)
-#plt.xscale('log')
-#plt.yscale('log')
+
+plt.figure(figsize = (15,5))
+plt.plot(Barray,Sarray)
+plt.xscale('log')
+plt.yscale('log')
+
+plt.figure(figsize = (15,5))
+plt.plot(Barray,iarray)
+plt.xscale('log')
+plt.yscale('log')
 
 import gammapy.stats as gstats
 
