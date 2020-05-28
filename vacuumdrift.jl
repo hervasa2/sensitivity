@@ -35,7 +35,8 @@ function driftcharge!(path, charge, simulation)
     for i in 2:size(path)[1]
         a = q*getEfield(path[i-1,:], simulation)/m
         vel[i,:] = vel[i-1,:] + a*δt
-        δx = 0.5*a*δt^2 + vel[i-1,:]*δt
+        #in reality mobilities should be here, and a saturation velocity
+        δx = 0.5*a*δt^2 #+ vel[i-1,:]*δt
         path[i,:] = path[i-1,:] + δx
         if path[i,1] >= 0.0348 || path[i,2] >= 0.0398
             path[i,:] = path[i-1,:]
