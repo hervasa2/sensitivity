@@ -45,6 +45,7 @@ function driftcharge!(path, charge, simulation)
 end
 
 function signal(path, charge, simulation)
+    δt = 1e-10 #s
     if charge == "h+"
         q = 1
     end
